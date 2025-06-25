@@ -5,16 +5,17 @@ CC		:= cc
 # CFLAGS	:=
 
 SRCS	:=\
-		./philo/main.c
+		./main.c
 
 OBJS	:= $(SRCS:.c=.o)
 
 $(NAME)	: $(OBJS)
-	$(CC) $(OBJS) -o $(NAME) -g
+	$(CC) $(SRCS) -o $(NAME) -g
 
 all		: $(NAME)
 
 %.o		: %.c
+	$(CC) -c $< -o $@
 
 clean	:
 	rm -f $(OBJS)
