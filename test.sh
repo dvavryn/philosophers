@@ -1,2 +1,2 @@
-cc main.c -g
+cc main.c -g -pthread
 ./a.out
