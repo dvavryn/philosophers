@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 14:03:48 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/07/09 14:04:03 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/07/10 11:00:03 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,20 @@ long	ft_atol(const char *nptr)
 		i++;
 	}
 	return (out * sign);
+}
+
+size_t	ft_strlen(const char *s)
+{
+	size_t	i;
+
+	i = -1;
+	while (s[++i])
+		;
+	return (i);
+}
+
+int	ft_error(char *msg)
+{
+	write(2, msg, ft_strlen(msg));
+	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 11:55:42 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/07/09 14:06:04 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/07/10 11:01:33 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,14 @@ typedef struct s_fork
 	int				id;
 }	t_fork;
 
+// utils.c
 long	ft_atol(const char *nptr);
+size_t	ft_strlen(const char *s);
+int		ft_error(char *msg);
+
+// init.c
+int		init_data(int argc, char **argv, t_data *data);
+void	get_data(char **argv, t_data *data);
+int		errorcheck(char **argv);
 
 #endif
