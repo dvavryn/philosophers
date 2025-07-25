@@ -1,0 +1,24 @@
+{
+	"files.associations": {
+		"atomic": "c",
+		"cmath": "c",
+		"compare": "c",
+		"complex": "c",
+		"string": "c",
+		"unordered_map": "c",
+		"vector": "c",
+		"optional": "c",
+		"random": "c",
+		"functional": "c",
+		"istream": "c",
+		"limits": "c",
+		"numeric": "c",
+		"ostream": "c",
+		"ranges": "c",
+		"sstream": "c",
+		"streambuf": "c",
+		"string_view": "c",
+		"tuple": "c",
+		"type_traits": "c"
+	}
+}
