@@ -1,22 +1,67 @@
-NAME	:= philo
-CC		:= cc
-CFLAGS	:= -g -pthread #-Wall -Wextra -Werror
-SRCS	:= main.c utils.c
-OBJS	:= $(SRCS:.c=.o)
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2025/08/04 23:52:03 by dvavryn           #+#    #+#              #
+#    Updated: 2025/08/04 23:52:40 by dvavryn          ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
-all:	$(NAME)
 
-%.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+
+RED    = \033[0;31m
+GREEN  = \033[0;32m
+YELLOW = \033[0;33m
+BLUE   = \033[0;34m
+RESET  = \033[0m
+
+NAME    := philo
+SRCDIR  := src
+OBJDIR  := obj
+INCDIR  := inc
+
+CC      := cc
+CFLAGS  := -Wall -Wextra -Werror -I$(INCDIR) -pthread -g
+
+SRCS    := \
+			$(SRCDIR)/check.c \
+			$(SRCDIR)/main.c \
+			$(SRCDIR)/utils.c			
+			
+OBJS    := $(patsubst $(SRCDIR)/%.c,$(OBJDIR)/%.o,$(SRCS))
+
+all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
+	@echo "\n$(GREEN)🚀 Linking $(NAME)...$(RESET)"
+	@$(CC) $(OBJS) -o $(NAME)
+	@echo "$(GREEN)✔ Successfully built $(NAME)!$(RESET)"
+
+$(OBJDIR)/%.o: $(SRCDIR)/%.c | $(OBJDIR)
+	@$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJDIR):
+	@mkdir -p $(OBJDIR)
+	@echo "$(BLUE)📁 Created $(OBJDIR) directory$(RESET)"
 
 clean:
-	rm -f $(OBJS)
+	@if [ -d "$(OBJDIR)" ]; then \
+		rm -rf $(OBJDIR); \
+		echo "$(RED)🧹 Removed $(OBJDIR) directory$(RESET)"; \
+	else \
+		echo "$(YELLOW)⚠️ No object files to clean$(RESET)"; \
+	fi
 
 fclean: clean
-	rm -f $(NAME)
+	@if [ -f "$(NAME)" ]; then \
+		rm -f $(NAME); \
+		echo "$(RED)🧹 Removed $(NAME)$(RESET)"; \
+	else \
+		echo "$(YELLOW)⚠️ $(NAME) not found$(RESET)"; \
+	fi
 
 re: fclean all
 

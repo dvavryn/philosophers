@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/09 14:03:48 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/07/10 11:00:03 by dvavryn          ###   ########.fr       */
+/*   Created: 2025/08/04 23:42:04 by dvavryn           #+#    #+#             */
+/*   Updated: 2025/08/05 00:35:08 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,18 +37,19 @@ long	ft_atol(const char *nptr)
 	return (out * sign);
 }
 
-size_t	ft_strlen(const char *s)
+void	*ft_calloc(size_t nmemb, size_t size)
 {
-	size_t	i;
+	size_t	total;
+	void	*out;
 
-	i = -1;
-	while (s[++i])
-		;
-	return (i);
-}
-
-int	ft_error(char *msg)
-{
-	write(2, msg, ft_strlen(msg));
-	return (1);
+	if (nmemb == 0 || size == 0)
+		return (malloc(0));
+	total = nmemb * size;
+	if (total / nmemb != size)
+		return (NULL);
+	out = malloc(total);
+	if (!out)
+		return (NULL);
+	memset(out, 0, total);
+	return (out);
 }

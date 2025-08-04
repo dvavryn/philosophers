@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/08 11:55:42 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/07/10 11:01:33 by dvavryn          ###   ########.fr       */
+/*   Created: 2025/08/04 23:33:06 by dvavryn           #+#    #+#             */
+/*   Updated: 2025/08/05 00:42:01 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,53 +16,57 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
-# include <pthread.h>
 # include <sys/time.h>
+# include <pthread.h>
 # include <limits.h>
+# include <string.h>
 
-# define ARGC "Usage: ./philo 1 800 200 200 [5]\n"
-# define ONE "Num of philos has to be between 1 and INT_MAX\n"
-# define TWO "Time to die has to be between 0 and INT_MAX\n"
-# define THREE "Time to eat has to be between 0 and INT_MAX\n"
-# define FOUR "Time to sleep has to be between 0 and INT_MAX\n"
-# define FIVE "Number of meals has to be between 1 and INT_MAX\n"
-
-struct	s_philo;
-struct	s_table;
-struct	s_fork;
+typedef struct s_mtx
+{
+	int				valid;
+	pthread_mutex_t	mtx;
+}	t_mtx;
 
 typedef struct s_data
 {
-	int				num_philos;
-	int				time_to_die;
-	int				time_to_eat;
-	int				time_to_sleep;
-	int				num_meals;
 	struct s_philo	*philos;
+	t_mtx			*forks;
+
+	t_mtx			mtx_print;
+	t_mtx			mtx_death;
+
+	pthread_t		monitor;
+
+	int				num_philos;
+	long			time_die;
+	long			time_eat;
+	long			time_sleep;
+	int				num_meals;
+
+	int				deat_flag;
+	long			start;
 }	t_data;
 
 typedef struct s_philo
 {
-	pthread_t		th;
-	struct s_fork	*fork_1;
-	struct s_fork	*fork_2;
+	t_data			*data;
+	pthread_t		thread;
+	t_mtx			*fork_one;
+	t_mtx			*fork_two;
+	t_mtx			mtx_meal;
+	long			last_meal;
+	int				meals_eaten;
 	int				id;
 }	t_philo;
 
-typedef struct s_fork
-{
-	pthread_mutex_t	mutex;
-	int				id;
-}	t_fork;
+// check.c
+int		check(int argc, char **argv);
 
 // utils.c
 long	ft_atol(const char *nptr);
-size_t	ft_strlen(const char *s);
-int		ft_error(char *msg);
+void	*ft_calloc(size_t nmemb, size_t size);
 
 // init.c
-int		init_data(int argc, char **argv, t_data *data);
-void	get_data(char **argv, t_data *data);
-int		errorcheck(char **argv);
+int		init(t_data *data, char **argv);
 
 #endif

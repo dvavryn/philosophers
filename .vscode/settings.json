@@ -1,5 +1,5 @@
 {
-	"files.associations": {
-		"time.h": "c"
-	}
+    "files.associations": {
+        "philo.h": "c"
+    }
 }
