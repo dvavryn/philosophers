@@ -6,7 +6,7 @@
 #    By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/04 23:52:03 by dvavryn           #+#    #+#              #
-#    Updated: 2025/08/04 23:52:40 by dvavryn          ###   ########.fr        #
+#    Updated: 2025/08/05 01:17:55 by dvavryn          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,13 @@ CFLAGS  := -Wall -Wextra -Werror -I$(INCDIR) -pthread -g
 
 SRCS    := \
 			$(SRCDIR)/check.c \
+			$(SRCDIR)/clean.c \
+			$(SRCDIR)/init.c \
+			$(SRCDIR)/join_threads.c \
 			$(SRCDIR)/main.c \
+			$(SRCDIR)/routine_monitor.c \
+			$(SRCDIR)/routine_philo.c \
+			$(SRCDIR)/start_simulation.c \
 			$(SRCDIR)/utils.c			
 			
 OBJS    := $(patsubst $(SRCDIR)/%.c,$(OBJDIR)/%.o,$(SRCS))

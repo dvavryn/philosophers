@@ -1,30 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   routine_monitor.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/04 23:31:53 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/08/05 01:25:25 by dvavryn          ###   ########.fr       */
+/*   Created: 2025/08/05 01:16:20 by dvavryn           #+#    #+#             */
+/*   Updated: 2025/08/05 01:29:42 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	main(int argc, char **argv)
+void	*routine_monitor(void *arg)
 {
-	t_data	data;
-
-	if (check(argc, argv))
-		return (1);
-	if (init(&data, argv))
-		return (clean(&data, 1));
-	if (get_time_ms(&data.start))
-		return (clean(&data, 1));
-	if (start_simulation(&data))
-		return (clean(&data, 1));
-	if (join_threads(&data))
-		return (clean(&data, 1));
-	return (clean(&data, 0));
+	(void)arg;
+	return (NULL);
 }

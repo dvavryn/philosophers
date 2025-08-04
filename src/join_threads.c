@@ -1,30 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   join_threads.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/04 23:31:53 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/08/05 01:25:25 by dvavryn          ###   ########.fr       */
+/*   Created: 2025/08/05 01:11:04 by dvavryn           #+#    #+#             */
+/*   Updated: 2025/08/05 01:14:41 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	main(int argc, char **argv)
+int	join_threads(t_data *data)
 {
-	t_data	data;
+	ssize_t	i;
 
-	if (check(argc, argv))
+	i = -1;
+	while (++i < data->num_philos)
+	{
+		if (pthread_join(data->philos[i].thread, NULL))
+		{
+			printf("Error: pthread_join()-philo failed at join_thread()\n");
+			return (1);
+		}
+	}
+	if (pthread_join(data->monitor, NULL))
+	{
+		printf("Error: pthreadjoin()-monitor failed at join_thead()\n");
 		return (1);
-	if (init(&data, argv))
-		return (clean(&data, 1));
-	if (get_time_ms(&data.start))
-		return (clean(&data, 1));
-	if (start_simulation(&data))
-		return (clean(&data, 1));
-	if (join_threads(&data))
-		return (clean(&data, 1));
-	return (clean(&data, 0));
+	}
+	return (0);
 }

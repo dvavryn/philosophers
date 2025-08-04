@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 23:42:04 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/08/05 00:35:08 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/08/05 01:01:55 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,17 @@ void	*ft_calloc(size_t nmemb, size_t size)
 		return (NULL);
 	memset(out, 0, total);
 	return (out);
+}
+
+int	get_time_ms(long *time)
+{
+	struct timeval	tv;
+
+	if (gettimeofday(&tv, NULL) == -1)
+	{
+		printf("Error: gettimeofday() failed\n");
+		return (1);
+	}
+	*time = tv.tv_sec * 1000 + tv.tv_usec / 1000;
+	return (0);
 }

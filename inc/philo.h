@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 23:33:06 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/08/05 00:42:01 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/08/05 01:18:58 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,24 @@ int		check(int argc, char **argv);
 // utils.c
 long	ft_atol(const char *nptr);
 void	*ft_calloc(size_t nmemb, size_t size);
+int		get_time_ms(long *time);
 
 // init.c
 int		init(t_data *data, char **argv);
+
+// clean.c
+int		clean(t_data *data, int ret);
+
+// join_threads.c
+int		join_threads(t_data *data);
+
+// start_simulation.c
+int		start_simulation(t_data *data);
+
+// routine_monitor.c
+void	*routine_monitor(void *arg);
+
+// routine_philo.c
+void	*routine_philo(void *arg);
 
 #endif
