@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 00:06:21 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/08/05 01:04:57 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/08/05 14:20:16 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	init(t_data *data, char **argv)
 static int	init_data(t_data *data, char **argv)
 {
 	memset(data, 0, sizeof(t_data));
-	data->num_meals = (int)ft_atol(argv[1]);
+	data->num_philos = (int)ft_atol(argv[1]);
 	data->time_die = ft_atol(argv[2]);
 	data->time_eat = ft_atol(argv[3]);
 	data->time_sleep = ft_atol(argv[4]);

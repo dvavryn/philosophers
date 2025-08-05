@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 23:42:04 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/08/05 01:01:55 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/08/05 14:34:45 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,20 @@ int	get_time_ms(long *time)
 	}
 	*time = tv.tv_sec * 1000 + tv.tv_usec / 1000;
 	return (0);
+}
+
+void	safe_print(t_philo *philo, char *output)
+{
+	long	time;
+
+	pthread_mutex_lock(&philo->data->mtx_print.mtx);
+	get_time_ms(&time);
+	printf("%ld %d %s\n", time - philo->data->start, philo->id, output);
+	pthread_mutex_unlock(&philo->data->mtx_print.mtx);
+}
+
+void	ft_usleep(t_data *data, long ms)
+{
+	(void)data;
+	usleep(ms * 1000);
 }
