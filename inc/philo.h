@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 23:33:06 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/08/05 15:25:30 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/08/05 19:45:54 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,20 +43,21 @@ typedef struct s_data
 	long			time_sleep;
 	int				num_meals;
 
-	int				deat_flag;
+	int				death_flag;
 	long			start;
 }	t_data;
 
 typedef struct s_philo
 {
-	t_data			*data;
-	pthread_t		thread;
-	t_mtx			*fork_one;
-	t_mtx			*fork_two;
-	t_mtx			mtx_meal;
-	long			last_meal;
-	int				meals_eaten;
-	int				id;
+	t_data		*data;
+	pthread_t	thread;
+	t_mtx		*fork_one;
+	t_mtx		*fork_two;
+	t_mtx		mtx_meal;
+	long		last_meal;
+	int			meals_eaten;
+	int			full;
+	int			id;
 }	t_philo;
 
 // check.c

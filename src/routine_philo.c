@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 01:16:26 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/08/05 17:29:45 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/08/05 19:52:29 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	routine_philo_even(t_philo *philo);
 void	routine_philo_odd(t_philo *philo);
 void	grab_forks(t_philo *philo);
 void	release_forks(t_philo *philo);
+static int		check_death(t_philo *philo);
 
 void	*routine_philo(void *arg)
 {
@@ -37,6 +38,7 @@ void	routine_philo_solo(t_philo *philo)
 	pthread_mutex_lock(&philo->fork_one->mtx);
 	safe_print(philo, "has taken a fork");
 	ft_usleep(philo->data, philo->data->time_die);
+	
 }
 
 void	routine_philo_even(t_philo *philo)
@@ -44,7 +46,7 @@ void	routine_philo_even(t_philo *philo)
 	int meals;
 
 	meals = 0;
-	while (meals != philo->data->num_meals)
+	while (meals != philo->data->num_meals && !check_death(philo))
 	{
 		if (philo->id % 2 == 0)
 			safe_print(philo, "is thinking");
@@ -55,9 +57,15 @@ void	routine_philo_even(t_philo *philo)
 		meals++;
 		pthread_mutex_unlock(&philo->mtx_meal.mtx);
 		safe_print(philo, "is eating");
+		ft_usleep(philo->data, philo->data->time_sleep);
 		release_forks(philo);
 		if (meals == philo->data->num_meals)
+		{
+			pthread_mutex_lock(&philo->mtx_meal.mtx);
+			philo->full = 1;
+			pthread_mutex_unlock(&philo->mtx_meal.mtx);
 			break ;
+		}
 		safe_print(philo, "is sleeping");
 		ft_usleep(philo->data, philo->data->time_sleep);
 		if (philo->id % 2 == 1)
@@ -70,7 +78,7 @@ void	routine_philo_odd(t_philo *philo)
 	int meals;
 
 	meals = 0;
-	while (meals != philo->data->num_meals)
+	while (meals != philo->data->num_meals && !check_death(philo))
 	{
 		if (philo->id % 2 == 0)
 			safe_print(philo, "is thinking");
@@ -81,9 +89,15 @@ void	routine_philo_odd(t_philo *philo)
 		meals++;
 		pthread_mutex_unlock(&philo->mtx_meal.mtx);
 		safe_print(philo, "is eating");
+		ft_usleep(philo->data, philo->data->time_sleep);
 		release_forks(philo);
 		if (meals == philo->data->num_meals)
+		{
+			pthread_mutex_lock(&philo->mtx_meal.mtx);
+			philo->full = 1;
+			pthread_mutex_unlock(&philo->mtx_meal.mtx);
 			break ;
+		}
 		safe_print(philo, "is sleeping");
 		ft_usleep(philo->data, philo->data->time_sleep);
 		if (philo->id % 2 == 1)
@@ -121,4 +135,14 @@ void	release_forks(t_philo *philo)
 		pthread_mutex_unlock(&philo->fork_one->mtx);
 		pthread_mutex_unlock(&philo->fork_two->mtx);		
 	}
+}
+
+static int check_death(t_philo *philo)
+{
+	int	ret;
+
+	pthread_mutex_lock(&philo->data->mtx_death.mtx);
+	ret = philo->data->death_flag;
+	pthread_mutex_unlock(&philo->data->mtx_death.mtx);
+	return (ret);
 }
