@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 01:16:26 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/08/07 15:38:26 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/08/07 17:01:20 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,9 @@ void	philo_eat(t_philo *philo);
 void	*routine_philo(void *arg)
 {
 	t_philo	*philo;
+	int		meals;
 
+	meals = 0;
 	philo = (t_philo *)arg;
 	if (philo->data->num_philos == 1)
 	{
@@ -31,12 +33,13 @@ void	*routine_philo(void *arg)
 		pthread_mutex_unlock(&philo->fork_one->mtx);
 		return (0);
 	}
-	if (philo->id % 2 == 0)
+	if (philo->data->num_philos % 2 == 1 && philo->id % 2 == 0)
 		usleep(1000);
 	while (!check_stop(philo->data))
 	{
 		if (!check_stop(philo->data))
 			safe_print(philo, "is thinking");
+
 		take_forks(philo);
 		if (check_stop(philo->data))
 		{
@@ -46,6 +49,8 @@ void	*routine_philo(void *arg)
 		philo_eat(philo);
 		release_forks(philo);
 		if (check_stop(philo->data))
+			break ;
+		if (++meals >= philo->data->num_meals)
 			break ;
 		if (!check_stop(philo->data))
 			safe_print(philo, "is sleeping");

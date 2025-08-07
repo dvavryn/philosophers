@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 01:16:20 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/08/07 15:38:51 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/08/07 16:25:15 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	*routine_monitor(void *arg)
 			set_death(data);
 			return (NULL);
 		}
-		usleep(500);
+		usleep(1000);
 	}
 	return (NULL);
 }
