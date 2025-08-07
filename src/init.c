@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 00:06:21 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/08/05 14:20:16 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/08/07 14:52:16 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	init(t_data *data, char **argv)
 	}
 	if (init_mutexes(data))
 	{
-		printf("Error: pthred_mutex_init() failed at init_mutexes()\n");
+		printf("Error: pthread_mutex_init() failed at init_mutexes()\n");
 		return (1);
 	}
 	init_philos(data);

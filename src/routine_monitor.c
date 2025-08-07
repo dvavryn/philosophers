@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 01:16:20 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/08/07 11:38:58 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/08/07 15:38:51 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ static int	check_death(t_philo *philo, long now)
 	pthread_mutex_lock(&philo->mtx_meal.mtx);
 	last = philo->last_meal;
 	pthread_mutex_unlock(&philo->mtx_meal.mtx);
-
 	if (now - last >= philo->data->time_die)
 	{
-		safe_print(philo, "died");
+		if (set_death(philo->data))
+			safe_print(philo, "died");
 		return (1);
 	}
 	return (0);
@@ -58,7 +58,6 @@ void	*routine_monitor(void *arg)
 	while (!check_stop(data))
 	{
 		now = get_time_ms();
-
 		i = -1;
 		while (++i < data->num_philos && !check_stop(data))
 			if (check_death(&data->philos[i], now))
@@ -68,7 +67,7 @@ void	*routine_monitor(void *arg)
 			set_death(data);
 			return (NULL);
 		}
-		usleep(1000);
-	}	
+		usleep(500);
+	}
 	return (NULL);
 }

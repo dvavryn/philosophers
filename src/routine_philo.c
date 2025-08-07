@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 01:16:26 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/08/07 13:19:00 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/08/07 15:38:26 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,13 @@ void	*routine_philo(void *arg)
 void	philo_eat(t_philo *philo)
 {
 	safe_print(philo, "is eating");
+	pthread_mutex_lock(&philo->mtx_meal.mtx);
+	philo->last_meal = get_time_ms();
+	pthread_mutex_unlock(&philo->mtx_meal.mtx);
 	ft_usleep(philo->data, philo->data->time_eat);
 	pthread_mutex_lock(&philo->mtx_meal.mtx);
 	philo->meals_eaten++;
-	philo->last_meal = get_time_ms();
-	if (philo->meals_eaten == philo->data->num_meals)
+	if (philo->data->num_meals && philo->meals_eaten >= philo->data->num_meals)
 		philo->full = 1;
 	pthread_mutex_unlock(&philo->mtx_meal.mtx);
 }
@@ -79,7 +81,7 @@ void	take_forks(t_philo *philo)
 	{
 		pthread_mutex_lock(&philo->fork_two->mtx);
 		safe_print(philo, "has taken a fork");
-		pthread_mutex_lock(&philo->fork_one->mtx);		
+		pthread_mutex_lock(&philo->fork_one->mtx);
 		safe_print(philo, "has taken a fork");
 	}
 }

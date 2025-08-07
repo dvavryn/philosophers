@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 10:49:40 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/08/07 11:04:24 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/08/07 15:37:47 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	set_death(t_data *data)
 	if (!data->death_flag)
 	{
 		data->death_flag = 1;
-		ret = 1;	
+		ret = 1;
 	}
 	pthread_mutex_unlock(&data->mtx_death.mtx);
 	return (ret);

@@ -6,11 +6,12 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 23:31:53 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/08/07 13:12:10 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/08/07 15:39:00 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
 void	get_times(t_data *data);
 
 int	main(int argc, char **argv)
