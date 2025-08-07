@@ -6,7 +6,7 @@
 #    By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/04 23:52:03 by dvavryn           #+#    #+#              #
-#    Updated: 2025/08/05 13:34:19 by dvavryn          ###   ########.fr        #
+#    Updated: 2025/08/07 11:51:45 by dvavryn          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,7 @@ SRCS    := \
 			$(SRCDIR)/init.c \
 			$(SRCDIR)/join_threads.c \
 			$(SRCDIR)/main.c \
+			$(SRCDIR)/routine_helpers.c \
 			$(SRCDIR)/routine_monitor.c \
 			$(SRCDIR)/routine_philo.c \
 			$(SRCDIR)/start_simulation.c \

@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 23:33:06 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/08/05 19:45:54 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/08/07 11:05:39 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int		check(int argc, char **argv);
 // utils.c
 long	ft_atol(const char *nptr);
 void	*ft_calloc(size_t nmemb, size_t size);
-int		get_time_ms(long *time);
+long	get_time_ms();
 void	safe_print(t_philo *philo, char *output);
 void	ft_usleep(t_data *data, long ms);
 
@@ -87,5 +87,9 @@ void	*routine_monitor(void *arg);
 
 // routine_philo.c
 void	*routine_philo(void *arg);
+
+// routine_helpers.c
+int		check_stop(t_data *data);
+int		set_death(t_data *data);
 
 #endif

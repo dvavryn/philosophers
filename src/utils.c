@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 23:42:04 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/08/05 14:34:45 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/08/07 13:15:46 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,31 +54,50 @@ void	*ft_calloc(size_t nmemb, size_t size)
 	return (out);
 }
 
-int	get_time_ms(long *time)
+long	get_time_ms()
 {
 	struct timeval	tv;
 
 	if (gettimeofday(&tv, NULL) == -1)
-	{
 		printf("Error: gettimeofday() failed\n");
-		return (1);
-	}
-	*time = tv.tv_sec * 1000 + tv.tv_usec / 1000;
-	return (0);
+	return (tv.tv_usec / 1000 * tv.tv_sec * 1000);	
 }
 
 void	safe_print(t_philo *philo, char *output)
 {
 	long	time;
 
+	pthread_mutex_lock(&philo->data->mtx_death.mtx);
+	if (philo->data->death_flag == 1)
+	{
+		pthread_mutex_unlock(&philo->data->mtx_death.mtx);
+		return ;
+	}
+	else
+		pthread_mutex_unlock(&philo->data->mtx_death.mtx);
 	pthread_mutex_lock(&philo->data->mtx_print.mtx);
-	get_time_ms(&time);
+	time = get_time_ms();
 	printf("%ld %d %s\n", time - philo->data->start, philo->id, output);
 	pthread_mutex_unlock(&philo->data->mtx_print.mtx);
 }
 
 void	ft_usleep(t_data *data, long ms)
 {
-	(void)data;
-	usleep(ms * 1000);
+	long	end;
+	long	now;
+	long	rem;
+
+	now = get_time_ms();
+	end = now + ms;
+	while (!check_stop(data))
+	{
+		now = get_time_ms();
+		if (now >= end)
+			break ;
+		rem = end - now;
+		if (rem > 1)
+			usleep(1000);
+		else
+			usleep(100);
+	}	
 }

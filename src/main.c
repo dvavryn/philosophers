@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 23:31:53 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/08/05 19:45:06 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/08/07 13:12:10 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	get_times(t_data *data)
 	ssize_t	i;
 
 	i = -1;
-	get_time_ms(&data->start);
+	data->start = get_time_ms();
 	while (++i < data->num_philos)
 		data->philos[i].last_meal = data->start;
 }

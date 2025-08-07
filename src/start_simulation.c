@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 01:05:57 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/08/05 17:45:46 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/08/07 11:06:32 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	start_simulation(t_data *data)
 {
 	ssize_t	i;
 
-	if (pthread_create(&data->monitor, NULL, routine_monitor, &data))
+	if (pthread_create(&data->monitor, NULL, routine_monitor, data))
 	{
 		printf("Error: pthread_create()-monitor failed at"
 			"start_simulation()\n");
