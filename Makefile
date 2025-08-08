@@ -6,7 +6,7 @@
 #    By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/04 23:52:03 by dvavryn           #+#    #+#              #
-#    Updated: 2025/08/07 11:51:45 by dvavryn          ###   ########.fr        #
+#    Updated: 2025/08/08 17:58:51 by dvavryn          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,8 @@ OBJDIR  := obj
 INCDIR  := inc
 
 CC      := cc
-CFLAGS  := -Wall -Wextra -Werror -I$(INCDIR) -pthread -g
+CFLAGS  := -Wall -Wextra -Werror -I$(INCDIR) -pthread -g 
+SAN		:= -fsanitize=thread
 
 SRCS    := \
 			$(SRCDIR)/check.c \
@@ -34,7 +35,8 @@ SRCS    := \
 			$(SRCDIR)/routine_monitor.c \
 			$(SRCDIR)/routine_philo.c \
 			$(SRCDIR)/start_simulation.c \
-			$(SRCDIR)/utils.c			
+			$(SRCDIR)/utils_1.c \
+			$(SRCDIR)/utils_2.c
 			
 OBJS    := $(patsubst $(SRCDIR)/%.c,$(OBJDIR)/%.o,$(SRCS))
 
@@ -42,11 +44,11 @@ all: $(NAME)
 
 $(NAME): $(OBJS)
 	@echo "\n$(GREEN)🚀 Linking $(NAME)...$(RESET)"
-	@$(CC) $(OBJS) -o $(NAME)
+	@$(CC) $(SAN) $(CFLAGS) $(OBJS) -o $(NAME)
 	@echo "$(GREEN)✔ Successfully built $(NAME)!$(RESET)"
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c | $(OBJDIR)
-	@$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(SAN) $(CFLAGS) -c $< -o $@
 
 $(OBJDIR):
 	@mkdir -p $(OBJDIR)

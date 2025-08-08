@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 01:16:26 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/08/07 17:01:20 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/08/08 18:04:52 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,10 @@ void	*routine_philo(void *arg)
 	}
 	if (philo->data->num_philos % 2 == 1 && philo->id % 2 == 0)
 		usleep(1000);
+	if (!check_stop(philo->data))
+		safe_print(philo, "is thinking");	
 	while (!check_stop(philo->data))
 	{
-		if (!check_stop(philo->data))
-			safe_print(philo, "is thinking");
-
 		take_forks(philo);
 		if (check_stop(philo->data))
 		{
@@ -48,6 +47,7 @@ void	*routine_philo(void *arg)
 		}
 		philo_eat(philo);
 		release_forks(philo);
+		usleep(100);
 		if (check_stop(philo->data))
 			break ;
 		if (++meals >= philo->data->num_meals)
@@ -55,6 +55,10 @@ void	*routine_philo(void *arg)
 		if (!check_stop(philo->data))
 			safe_print(philo, "is sleeping");
 		ft_usleep(philo->data, philo->data->time_sleep);
+		if (!check_stop(philo->data))
+			safe_print(philo, "is thinking");
+		// ft_usleep(philo->data,
+		// 	(philo->data->time_die - philo->data->time_eat - philo->data->time_sleep) / 2);
 	}
 	return (NULL);
 }
@@ -66,11 +70,16 @@ void	philo_eat(t_philo *philo)
 	philo->last_meal = get_time_ms();
 	pthread_mutex_unlock(&philo->mtx_meal.mtx);
 	ft_usleep(philo->data, philo->data->time_eat);
-	pthread_mutex_lock(&philo->mtx_meal.mtx);
-	philo->meals_eaten++;
-	if (philo->data->num_meals && philo->meals_eaten >= philo->data->num_meals)
-		philo->full = 1;
-	pthread_mutex_unlock(&philo->mtx_meal.mtx);
+	if (philo->data->num_meals > 0 && !check_stop(philo->data))
+	{
+		pthread_mutex_lock(&philo->mtx_meal.mtx);
+		philo->meals_eaten++;
+		if (philo->data->num_meals != -1 && philo->meals_eaten >= philo->data->num_meals)
+			philo->full = 1;
+		else
+			philo->full = 0;
+		pthread_mutex_unlock(&philo->mtx_meal.mtx);
+	}
 }
 
 void	take_forks(t_philo *philo)

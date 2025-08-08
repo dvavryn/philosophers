@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 00:06:21 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/08/07 14:52:16 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/08/08 16:31:06 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,10 @@ static int	init_data(t_data *data, char **argv)
 	if (argv[5])
 		data->num_meals = (int)ft_atol(argv[5]);
 	data->philos = ft_calloc(data->num_philos, sizeof(t_philo));
+	if (!data->philos)
+		return (1);
 	data->forks = ft_calloc(data->num_philos, sizeof(t_mtx));
-	if (!data->philos || !data->forks)
+	if (!data->forks)
 		return (1);
 	return (0);
 }

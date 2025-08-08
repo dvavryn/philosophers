@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 01:16:20 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/08/07 16:25:15 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/08/08 17:58:25 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int	all_full(t_data *data)
 	int	i;
 	int	is_full;
 
-	if (data->num_meals <= 0)
+	if (data->num_meals == -1)
 		return (0);
 	i = -1;
 	while (++i < data->num_philos)
@@ -48,6 +48,20 @@ static int	all_full(t_data *data)
 	return (1);
 }
 
+static int	check_full(t_philo *philo)
+{
+	if (philo->data->num_meals == -1)
+		return (0);
+	pthread_mutex_lock(&philo->mtx_meal.mtx);
+	if (philo->full)
+	{
+		pthread_mutex_unlock(&philo->mtx_meal.mtx);
+		return (1);
+	}
+	pthread_mutex_unlock(&philo->mtx_meal.mtx);
+	return (0);
+}
+
 void	*routine_monitor(void *arg)
 {
 	t_data	*data;
@@ -60,8 +74,11 @@ void	*routine_monitor(void *arg)
 		now = get_time_ms();
 		i = -1;
 		while (++i < data->num_philos && !check_stop(data))
-			if (check_death(&data->philos[i], now))
+		{
+			if (!check_full(&data->philos[i])
+				&& check_death(&data->philos[i], now))
 				return (NULL);
+		}
 		if (!check_stop(data) && all_full(data))
 		{
 			set_death(data);
