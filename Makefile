@@ -6,7 +6,7 @@
 #    By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/04 23:52:03 by dvavryn           #+#    #+#              #
-#    Updated: 2025/08/08 17:58:51 by dvavryn          ###   ########.fr        #
+#    Updated: 2025/09/16 14:03:57 by dvavryn          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,8 @@ INCDIR  := inc
 
 CC      := cc
 CFLAGS  := -Wall -Wextra -Werror -I$(INCDIR) -pthread -g 
-SAN		:= -fsanitize=thread
+SAN		:=
+# SAN		:= -fsanitize=thread
 
 SRCS    := \
 			$(SRCDIR)/check.c \

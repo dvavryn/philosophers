@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 23:33:06 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/08/07 15:39:07 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/09/16 15:37:37 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef struct s_data
 	long			time_sleep;
 	int				num_meals;
 
+	int				sim_ended;
 	int				death_flag;
 	long			start;
 }	t_data;

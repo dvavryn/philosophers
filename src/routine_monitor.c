@@ -6,11 +6,21 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 01:16:20 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/08/08 17:58:25 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/09/16 17:20:37 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+// void	*routine_monitor(void *arg)
+// {
+// 	t_data	*data;
+
+// 	data = (t_data *)arg;
+	
+	
+// 	return (NULL);
+// }
 
 static int	check_death(t_philo *philo, long now)
 {
