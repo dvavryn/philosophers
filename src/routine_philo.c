@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 01:16:26 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/16 17:33:55 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/09/18 15:29:39 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	even_amount_philos(t_philo *philo);
 
 void	*routine_philo(void *arg)
 {
-	t_philo *philo;
+	t_philo	*philo;
 
 	philo = (t_philo *)arg;
 	if (philo->data->num_philos == 1)
@@ -35,7 +35,6 @@ void	single_philo(t_philo *philo)
 	pthread_mutex_lock(&philo->fork_one->mtx);
 	safe_print(philo, "has taken a fork");
 	usleep(philo->data->time_die * 1000);
-	safe_print(philo, "died");
 	pthread_mutex_unlock(&philo->fork_one->mtx);
 }
 
@@ -53,7 +52,7 @@ void	philo_sleep(t_philo *philo)
 void	even_philo_eat(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->fork_one->mtx);
-	safe_print(philo, "has taken a fork");	
+	safe_print(philo, "has taken a fork");
 	pthread_mutex_lock(&philo->fork_two->mtx);
 	safe_print(philo, "has taken a fork");
 	safe_print(philo, "is eating");
@@ -75,7 +74,7 @@ void	even_amount_philos(t_philo *philo)
 		philo_think(philo);
 		ft_usleep(philo->data, philo->data->time_eat / 2);
 	}
-	while (!philo->data->sim_ended)
+	while (!philo->data->death_flag)
 	{
 		even_philo_eat(philo);
 		if (philo->full == 1)
@@ -84,8 +83,6 @@ void	even_amount_philos(t_philo *philo)
 		philo_think(philo);
 	}
 }
-
-
 
 void	odd_philo_eat_even(t_philo *philo)
 {
@@ -105,7 +102,6 @@ void	odd_philo_eat_even(t_philo *philo)
 	pthread_mutex_unlock(&philo->fork_one->mtx);
 }
 
-
 void	odd_philo_eat_odd(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->fork_two->mtx);
@@ -124,7 +120,6 @@ void	odd_philo_eat_odd(t_philo *philo)
 	pthread_mutex_unlock(&philo->fork_two->mtx);
 }
 
-
 void	odd_amount_philos(t_philo *philo)
 {
 	if (philo->id == 1 || philo->id % 2 == 0)
@@ -134,7 +129,7 @@ void	odd_amount_philos(t_philo *philo)
 		if (philo->id == 1)
 			ft_usleep(philo->data, philo->data->time_eat);
 	}
-	while (!philo->data->sim_ended)
+	while (!philo->data->death_flag)
 	{
 		if (philo->id % 2 == 0)
 			odd_philo_eat_even(philo);
@@ -144,5 +139,10 @@ void	odd_amount_philos(t_philo *philo)
 			break ;
 		philo_sleep(philo);
 		philo_think(philo);
+		if (philo->data->time_eat > philo->data->time_sleep)
+			ft_usleep(philo->data, philo->data->time_eat
+				+ philo->data->time_eat / 2);
+		else
+			ft_usleep(philo->data, philo->data->time_eat);
 	}
 }
