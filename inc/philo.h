@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 23:33:06 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/16 15:37:37 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/09/18 15:52:47 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,5 +93,10 @@ void	*routine_philo(void *arg);
 // routine_helpers.c
 int		check_stop(t_data *data);
 int		set_death(t_data *data);
+
+void	philo_think(t_philo *philo);
+void	philo_sleep(t_philo *philo);
+void	odd_amount_philos(t_philo *philo);
+void	even_amount_philos(t_philo *philo);
 
 #endif

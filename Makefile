@@ -6,7 +6,7 @@
 #    By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/04 23:52:03 by dvavryn           #+#    #+#              #
-#    Updated: 2025/09/16 14:03:57 by dvavryn          ###   ########.fr        #
+#    Updated: 2025/09/18 15:51:36 by dvavryn          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,9 +22,7 @@ OBJDIR  := obj
 INCDIR  := inc
 
 CC      := cc
-CFLAGS  := -Wall -Wextra -Werror -I$(INCDIR) -pthread -g 
-SAN		:=
-# SAN		:= -fsanitize=thread
+CFLAGS  := -Wall -Wextra -Werror -I$(INCDIR) -pthread -g
 
 SRCS    := \
 			$(SRCDIR)/check.c \
@@ -35,6 +33,8 @@ SRCS    := \
 			$(SRCDIR)/routine_helpers.c \
 			$(SRCDIR)/routine_monitor.c \
 			$(SRCDIR)/routine_philo.c \
+			$(SRCDIR)/routine_philo_even.c \
+			$(SRCDIR)/routine_philo_odd.c \
 			$(SRCDIR)/start_simulation.c \
 			$(SRCDIR)/utils_1.c \
 			$(SRCDIR)/utils_2.c
