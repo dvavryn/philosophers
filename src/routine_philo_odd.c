@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/18 15:50:02 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/18 19:06:14 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/09/18 19:13:40 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,13 @@ void	odd_philo_eat_even(t_philo *philo)
 	safe_print(philo, "has taken a fork");
 	safe_print(philo, "is eating");
 	pthread_mutex_lock(&philo->mtx_meal.mtx);
+	philo->last_meal = get_time_ms();
+	pthread_mutex_unlock(&philo->mtx_meal.mtx);
+	ft_usleep(philo->data, philo->data->time_eat);
+	pthread_mutex_lock(&philo->mtx_meal.mtx);
 	philo->meals_eaten++;
 	if (philo->meals_eaten == philo->data->num_meals)
 		philo->full = 1;
-	philo->last_meal = get_time_ms();
-	ft_usleep(philo->data, philo->data->time_eat);
 	pthread_mutex_unlock(&philo->mtx_meal.mtx);
 	pthread_mutex_unlock(&philo->fork_two->mtx);
 	pthread_mutex_unlock(&philo->fork_one->mtx);
@@ -39,11 +41,13 @@ void	odd_philo_eat_odd(t_philo *philo)
 	safe_print(philo, "has taken a fork");
 	safe_print(philo, "is eating");
 	pthread_mutex_lock(&philo->mtx_meal.mtx);
+	philo->last_meal = get_time_ms();
+	pthread_mutex_unlock(&philo->mtx_meal.mtx);
+	ft_usleep(philo->data, philo->data->time_eat);
+	pthread_mutex_lock(&philo->mtx_meal.mtx);
 	philo->meals_eaten++;
 	if (philo->meals_eaten == philo->data->num_meals)
 		philo->full = 1;
-	philo->last_meal = get_time_ms();
-	ft_usleep(philo->data, philo->data->time_eat);
 	pthread_mutex_unlock(&philo->mtx_meal.mtx);
 	pthread_mutex_unlock(&philo->fork_one->mtx);
 	pthread_mutex_unlock(&philo->fork_two->mtx);
