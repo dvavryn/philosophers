@@ -6,14 +6,13 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 01:16:26 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/18 15:52:43 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/09/19 13:44:26 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
 void	single_philo(t_philo *philo);
-
 
 void	*routine_philo(void *arg)
 {

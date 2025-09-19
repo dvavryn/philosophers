@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/18 15:50:02 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/18 19:13:40 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/09/19 14:10:30 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	odd_philo_eat_even(t_philo *philo)
 {
-	// 5 600 200 200 should die!!!
 	pthread_mutex_lock(&philo->fork_one->mtx);
 	safe_print(philo, "has taken a fork");
 	pthread_mutex_lock(&philo->fork_two->mtx);
@@ -58,7 +57,7 @@ void	odd_amount_philos(t_philo *philo)
 	if (philo->id == 1 || philo->id % 2 == 0)
 	{
 		philo_think(philo);
-		ft_usleep(philo->data, philo->data->time_eat / 2);
+		ft_usleep(philo->data, philo->data->time_eat + 1);
 		if (philo->id == 1)
 			ft_usleep(philo->data, philo->data->time_eat);
 	}
@@ -74,7 +73,7 @@ void	odd_amount_philos(t_philo *philo)
 		philo_think(philo);
 		if (philo->data->time_eat > philo->data->time_sleep)
 			ft_usleep(philo->data, philo->data->time_eat
-				+ philo->data->time_eat / 2);
+				+ philo->data->time_eat - philo->data->time_sleep);
 		else
 			ft_usleep(philo->data, philo->data->time_eat);
 	}

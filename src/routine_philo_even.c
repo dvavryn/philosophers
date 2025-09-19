@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/18 15:50:02 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/18 15:50:49 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/09/19 14:05:47 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,13 @@ void	even_philo_eat(t_philo *philo)
 	pthread_mutex_lock(second);
 	safe_print(philo, "has taken a fork");
 	safe_print(philo, "is eating");
+	pthread_mutex_lock(&philo->mtx_meal.mtx);
+	philo->last_meal = get_time_ms();
+	pthread_mutex_unlock(&philo->mtx_meal.mtx);
 	ft_usleep(philo->data, philo->data->time_eat);
 	pthread_mutex_lock(&philo->mtx_meal.mtx);
-	philo->meals_eaten++;
-	if (philo->meals_eaten == philo->data->num_meals)
+	if (++philo->meals_eaten == philo->data->num_meals)
 		philo->full = 1;
-	philo->last_meal = get_time_ms();
 	pthread_mutex_unlock(&philo->mtx_meal.mtx);
 	pthread_mutex_unlock(first);
 	pthread_mutex_unlock(second);
@@ -45,7 +46,10 @@ void	even_amount_philos(t_philo *philo)
 	if (philo->id % 2 == 0)
 	{
 		philo_think(philo);
-		ft_usleep(philo->data, philo->data->time_eat / 2);
+		if (philo->data->time_die > (philo->data->time_eat + philo->data->time_sleep))
+			ft_usleep(philo->data, philo->data->time_eat);
+		else
+			ft_usleep(philo->data, philo->data->time_eat + 1);
 	}
 	while (!philo->data->death_flag)
 	{
